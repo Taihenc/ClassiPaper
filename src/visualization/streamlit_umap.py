@@ -77,10 +77,19 @@ def main():
     umap_embeddings = umap_reducer.fit_transform(pca_reduced)
     labels = kmeans.fit_predict(umap_embeddings)
 
+    umap_embeddings2 = umap_reducer.fit_transform(pca_reduced)
+
     # Prepare DataFrame for visualization
     umap_df = pd.DataFrame({
         'UMAP Dimension 1': umap_embeddings[:, 0],
         'UMAP Dimension 2': umap_embeddings[:, 1],
+        'Cluster': labels,
+        'Code': unique_codes
+    })
+
+    umap_df2 = pd.DataFrame({
+        'UMAP Dimension 1': umap_embeddings2[:, 0],
+        'UMAP Dimension 2': umap_embeddings2[:, 1],
         'Cluster': labels,
         'Code': unique_codes
     })
@@ -97,11 +106,22 @@ def main():
                 'UMAP Dimension 2': 'UMAP Dimension 2'}
     )
 
+    fig_scatter2 = px.scatter(
+        umap_df2, 
+        x='UMAP Dimension 1', 
+        y='UMAP Dimension 2', 
+        color='Cluster', 
+        hover_data=['Code'],  # Add code names as hover labels
+        title='UMAP Clustering of Classification Codes 2',
+        labels={'UMAP Dimension 1': 'UMAP Dimension 1', 
+                'UMAP Dimension 2': 'UMAP Dimension 2'}
+    )
+
     col1, col2 = st.columns([5,5])
     with col1:
         st.plotly_chart(fig_scatter)
-    # with col2:
-        # st.write("Hi")
+    with col2:
+        st.plotly_chart(fig_scatter2)
 
 if __name__ == "__main__":
     main()
