@@ -1,0 +1,1607 @@
+{
+  "search-results": {
+    "opensearch:totalResults": "2162566",
+    "opensearch:startIndex": "0",
+    "opensearch:itemsPerPage": "25",
+    "opensearch:Query": {
+      "@role": "request",
+      "@searchTerms": "KEY(mouse AND NOT cat OR dog) ",
+      "@startPage": "0"
+    },
+    "link": [
+      {
+        "@_fa": "true",
+        "@ref": "self",
+        "@href": "https://api.elsevier.com/content/search/scopus?start=0&count=25&query=KEY%28mouse+AND+NOT+cat+OR+dog%29+&apiKey=8941e00d64f263103e505fda23c38671",
+        "@type": "application/json"
+      },
+      {
+        "@_fa": "true",
+        "@ref": "first",
+        "@href": "https://api.elsevier.com/content/search/scopus?start=0&count=25&query=KEY%28mouse+AND+NOT+cat+OR+dog%29+&apiKey=8941e00d64f263103e505fda23c38671",
+        "@type": "application/json"
+      },
+      {
+        "@_fa": "true",
+        "@ref": "next",
+        "@href": "https://api.elsevier.com/content/search/scopus?start=25&count=25&query=KEY%28mouse+AND+NOT+cat+OR+dog%29+&apiKey=8941e00d64f263103e505fda23c38671",
+        "@type": "application/json"
+      },
+      {
+        "@_fa": "true",
+        "@ref": "last",
+        "@href": "https://api.elsevier.com/content/search/scopus?start=4975&count=25&query=KEY%28mouse+AND+NOT+cat+OR+dog%29+&apiKey=8941e00d64f263103e505fda23c38671",
+        "@type": "application/json"
+      }
+    ],
+    "entry": [
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85210317474"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85210317474?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85210317474&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85210317474&origin=inward"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210317474",
+        "dc:identifier": "SCOPUS_ID:85210317474",
+        "eid": "2-s2.0-85210317474",
+        "dc:title": "The role of the mucosal barrier system in maintaining gut symbiosis to prevent intestinal inflammation",
+        "dc:creator": "Okumura R.",
+        "prism:publicationName": "Seminars in Immunopathology",
+        "prism:issn": "18632297",
+        "prism:eIssn": "18632300",
+        "prism:volume": "47",
+        "prism:issueIdentifier": "1",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-12-01",
+        "prism:coverDisplayDate": "December 2025",
+        "prism:doi": "10.1007/s00281-024-01026-5",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Graduate School of Medicine",
+            "affiliation-city": "Suita",
+            "affiliation-country": "Japan"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "WPI Immunology Frontier Research Center, Osaka University",
+            "affiliation-city": "Suita",
+            "affiliation-country": "Japan"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "Osaka University",
+            "affiliation-city": "Suita",
+            "affiliation-country": "Japan"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "re",
+        "subtypeDescription": "Review",
+        "article-number": "2",
+        "source-id": "7100153107",
+        "openaccess": "1",
+        "openaccessFlag": true
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209714602"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209714602?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209714602&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209714602&origin=inward"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209714602",
+        "dc:identifier": "SCOPUS_ID:85209714602",
+        "eid": "2-s2.0-85209714602",
+        "dc:title": "Moderate-intensity aerobic exercise inhibits cell pyroptosis to improve myocardial ischemia-reperfusion injury",
+        "dc:creator": "Wang Y.",
+        "prism:publicationName": "Molecular Biology Reports",
+        "prism:issn": "03014851",
+        "prism:eIssn": "15734978",
+        "prism:volume": "52",
+        "prism:issueIdentifier": "1",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-12-01",
+        "prism:coverDisplayDate": "December 2025",
+        "prism:doi": "10.1007/s11033-024-10065-y",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Henan Provincial People's Hospital",
+            "affiliation-city": "Zhengzhou",
+            "affiliation-country": "China"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "Zhengzhou University",
+            "affiliation-city": "Zhengzhou",
+            "affiliation-country": "China"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "Henan University",
+            "affiliation-city": "Zhengzhou",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "5",
+        "source-id": "14154",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209577916"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209577916?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209577916&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209577916&origin=inward"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209577916",
+        "dc:identifier": "SCOPUS_ID:85209577916",
+        "eid": "2-s2.0-85209577916",
+        "dc:title": "Anaplastic thyroid carcinoma: vimentin segregates at the invasive front of tumors in a murine xenograft model",
+        "dc:creator": "Miraglia A.",
+        "prism:publicationName": "Histochemistry and Cell Biology",
+        "prism:issn": "09486143",
+        "prism:eIssn": "1432119X",
+        "prism:volume": "163",
+        "prism:issueIdentifier": "1",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-12-01",
+        "prism:coverDisplayDate": "December 2025",
+        "prism:doi": "10.1007/s00418-024-02329-2",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "ISPA-CNR",
+            "affiliation-city": "Lecce",
+            "affiliation-country": "Italy"
+          }
+        ],
+        "pubmed-id": "39557701",
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "6",
+        "source-id": "18548",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209193847"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209193847?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209193847&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209193847&origin=inward"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209193847",
+        "dc:identifier": "SCOPUS_ID:85209193847",
+        "eid": "2-s2.0-85209193847",
+        "dc:title": "Current biological implications and clinical relevance of metastatic circulating tumor cells",
+        "dc:creator": "Shahhosseini R.",
+        "prism:publicationName": "Clinical and Experimental Medicine",
+        "prism:issn": "15918890",
+        "prism:eIssn": "15919528",
+        "prism:volume": "25",
+        "prism:issueIdentifier": "1",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-12-01",
+        "prism:coverDisplayDate": "December 2025",
+        "prism:doi": "10.1007/s10238-024-01518-6",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "İstanbul Medipol Üniversitesi",
+            "affiliation-city": "Istanbul",
+            "affiliation-country": "Turkey"
+          }
+        ],
+        "pubmed-id": "39546080",
+        "prism:aggregationType": "Journal",
+        "subtype": "re",
+        "subtypeDescription": "Review",
+        "article-number": "7",
+        "source-id": "29302",
+        "openaccess": "1",
+        "openaccessFlag": true
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209101326"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209101326?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209101326&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209101326&origin=inward"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209101326",
+        "dc:identifier": "SCOPUS_ID:85209101326",
+        "eid": "2-s2.0-85209101326",
+        "dc:title": "Pseudo-trajectory inference for identifying essential regulations and molecules in cell fate decisions",
+        "dc:creator": "He X.",
+        "prism:publicationName": "Journal of Biological Physics",
+        "prism:issn": "00920606",
+        "prism:eIssn": "15730689",
+        "prism:volume": "51",
+        "prism:issueIdentifier": "1",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-12-01",
+        "prism:coverDisplayDate": "December 2025",
+        "prism:doi": "10.1007/s10867-024-09665-3",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Shanghai University",
+            "affiliation-city": "Shanghai",
+            "affiliation-country": "China"
+          }
+        ],
+        "pubmed-id": "39541052",
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "2",
+        "source-id": "14894",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209589997"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209589997?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209589997&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209589997&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S2772566924000624"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209589997",
+        "dc:identifier": "SCOPUS_ID:85209589997",
+        "eid": "2-s2.0-85209589997",
+        "dc:title": "Exploring the active components and mechanism of Ziziphi Spinosae Semen in treating insomnia by network pharmacology and metabonomics",
+        "dc:creator": "Yu X.",
+        "prism:publicationName": "Journal of Future Foods",
+        "prism:eIssn": "27725669",
+        "prism:volume": "5",
+        "prism:issueIdentifier": "5",
+        "prism:pageRange": "503-512",
+        "prism:coverDate": "2025-09-01",
+        "prism:coverDisplayDate": "September 2025",
+        "prism:doi": "10.1016/j.jfutfo.2024.08.008",
+        "pii": "S2772566924000624",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Zhoukou Vocational and Technical College",
+            "affiliation-city": "Zhoukou",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "source-id": "21101097033",
+        "openaccess": "1",
+        "openaccessFlag": true
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85207753814"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85207753814?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85207753814&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85207753814&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S2772566924000521"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85207753814",
+        "dc:identifier": "SCOPUS_ID:85207753814",
+        "eid": "2-s2.0-85207753814",
+        "dc:title": "Isaria cicadae Miquel, as an edible fungus, against dextran sulfate sodium -induced ulcerative colitis in BALB/c mice",
+        "dc:creator": "Wang B.",
+        "prism:publicationName": "Journal of Future Foods",
+        "prism:eIssn": "27725669",
+        "prism:volume": "5",
+        "prism:issueIdentifier": "4",
+        "prism:pageRange": "398-409",
+        "prism:coverDate": "2025-07-01",
+        "prism:coverDisplayDate": "July 2025",
+        "prism:doi": "10.1016/j.jfutfo.2024.07.018",
+        "pii": "S2772566924000521",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Nanjing University of Chinese Medicine",
+            "affiliation-city": "Nanjing",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "source-id": "21101097033",
+        "openaccess": "1",
+        "openaccessFlag": true
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85198781408"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85198781408?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85198781408&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85198781408&origin=inward"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85198781408",
+        "dc:identifier": "SCOPUS_ID:85198781408",
+        "eid": "2-s2.0-85198781408",
+        "dc:title": "The Protective Effect of Physalisangulate L. (Solanaceae) and its Modulatory Action on the Sperms and Testis of Paracetamol Intoxicated Mice",
+        "dc:creator": "Nasir K.M.",
+        "prism:publicationName": "Egyptian Journal of Veterinary Science(Egypt)",
+        "prism:issn": "11100222",
+        "prism:eIssn": "2357089X",
+        "prism:volume": "56",
+        "prism:issueIdentifier": "7",
+        "prism:pageRange": "1593-1601",
+        "prism:coverDate": "2025-07-01",
+        "prism:coverDisplayDate": "July 2025",
+        "prism:doi": "10.21608/EJVS.2024.282746.2006",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "University of Anbar",
+            "affiliation-city": "Ramadi",
+            "affiliation-country": "Iraq"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "source-id": "21101149381",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85207759836"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85207759836?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85207759836&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85207759836&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S2667266924000240"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85207759836",
+        "dc:identifier": "SCOPUS_ID:85207759836",
+        "eid": "2-s2.0-85207759836",
+        "dc:title": "Effects of various rolling deformations on the microstructure, mechanical properties, corrosion behavior, and cytocompatibility of biodegradable Zn-0.5Mn alloys",
+        "dc:creator": "Liu Y.",
+        "prism:publicationName": "Corrosion Communications",
+        "prism:eIssn": "26672669",
+        "prism:volume": "18",
+        "prism:pageRange": "1-18",
+        "prism:coverDate": "2025-06-01",
+        "prism:coverDisplayDate": "June 2025",
+        "prism:doi": "10.1016/j.corcom.2024.04.001",
+        "pii": "S2667266924000240",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Ningbo Institute of Industrial Technology, Chinese Academy of Sciences",
+            "affiliation-city": "Ningbo",
+            "affiliation-country": "China"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "Ningbo University",
+            "affiliation-city": "Ningbo",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "source-id": "21101092874",
+        "openaccess": "1",
+        "openaccessFlag": true,
+        "freetoread": {
+          "value": [
+            {
+              "$": "all"
+            },
+            {
+              "$": "publisherfullgold"
+            }
+          ]
+        },
+        "freetoreadLabel": {
+          "value": [
+            {
+              "$": "All Open Access"
+            },
+            {
+              "$": "Gold"
+            }
+          ]
+        }
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85198576663"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85198576663?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85198576663&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85198576663&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S2772566924000168"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85198576663",
+        "dc:identifier": "SCOPUS_ID:85198576663",
+        "eid": "2-s2.0-85198576663",
+        "dc:title": "Application and toxicological study of polyvinyl acetate (PVAc) coating on lemon (Citrus limon L.) fruit to extend the shelf life",
+        "dc:creator": "Chinchkar A.V.",
+        "prism:publicationName": "Journal of Future Foods",
+        "prism:eIssn": "27725669",
+        "prism:volume": "5",
+        "prism:issueIdentifier": "2",
+        "prism:pageRange": "145-152",
+        "prism:coverDate": "2025-06-01",
+        "prism:coverDisplayDate": "June 2025",
+        "prism:doi": "10.1016/j.jfutfo.2024.05.003",
+        "pii": "S2772566924000168",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "National Institute of Food Technology Entrepreneurship and Management",
+            "affiliation-city": "Sonipat",
+            "affiliation-country": "India"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "source-id": "21101097033",
+        "openaccess": "1",
+        "openaccessFlag": true
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85192910602"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85192910602?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85192910602&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85192910602&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S1001074224001657"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85192910602",
+        "dc:identifier": "SCOPUS_ID:85192910602",
+        "eid": "2-s2.0-85192910602",
+        "dc:title": "Subacute exposure to black phosphorus quantum dots induces cardiac fibrosis and the potential role of gut microbiota",
+        "dc:creator": "Han J.",
+        "prism:publicationName": "Journal of Environmental Sciences (China)",
+        "prism:issn": "10010742",
+        "prism:eIssn": "18787320",
+        "prism:volume": "152",
+        "prism:pageRange": "167-177",
+        "prism:coverDate": "2025-06-01",
+        "prism:coverDisplayDate": "June 2025",
+        "prism:doi": "10.1016/j.jes.2024.03.049",
+        "pii": "S1001074224001657",
+        "citedby-count": "1",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Xiamen University",
+            "affiliation-city": "Xiamen",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "source-id": "23393",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85190423569"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85190423569?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85190423569&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85190423569&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S1001074224001311"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85190423569",
+        "dc:identifier": "SCOPUS_ID:85190423569",
+        "eid": "2-s2.0-85190423569",
+        "dc:title": "Dibutyl phthalate disrupts [Ca<sup>2+</sup>]<inf>i</inf>, reactive oxygen species, [pH]<inf>i</inf>, protein kinases and mitochondrial activity, impairing sperm function",
+        "dc:creator": "Park S.H.",
+        "prism:publicationName": "Journal of Environmental Sciences (China)",
+        "prism:issn": "10010742",
+        "prism:eIssn": "18787320",
+        "prism:volume": "151",
+        "prism:pageRange": "68-78",
+        "prism:coverDate": "2025-05-01",
+        "prism:coverDisplayDate": "May 2025",
+        "prism:doi": "10.1016/j.jes.2024.03.015",
+        "pii": "S1001074224001311",
+        "citedby-count": "1",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Hanyang University",
+            "affiliation-city": "Seoul",
+            "affiliation-country": "South Korea"
+          }
+        ],
+        "pubmed-id": "39481973",
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "source-id": "23393",
+        "openaccess": "1",
+        "openaccessFlag": true,
+        "freetoread": {
+          "value": [
+            {
+              "$": "all"
+            },
+            {
+              "$": "publisherhybridgold"
+            }
+          ]
+        },
+        "freetoreadLabel": {
+          "value": [
+            {
+              "$": "All Open Access"
+            },
+            {
+              "$": "Hybrid Gold"
+            }
+          ]
+        }
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85190339042"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85190339042?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85190339042&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85190339042&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S1001074224001189"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85190339042",
+        "dc:identifier": "SCOPUS_ID:85190339042",
+        "eid": "2-s2.0-85190339042",
+        "dc:title": "The effects of 17β-trenbolone and bisphenol A on sexual behavior and social dominance via the hypothalamic-pituitary-gonadal axis in male mice",
+        "dc:creator": "Zuo X.",
+        "prism:publicationName": "Journal of Environmental Sciences (China)",
+        "prism:issn": "10010742",
+        "prism:eIssn": "18787320",
+        "prism:volume": "151",
+        "prism:pageRange": "54-67",
+        "prism:coverDate": "2025-05-01",
+        "prism:coverDisplayDate": "May 2025",
+        "prism:doi": "10.1016/j.jes.2024.02.023",
+        "pii": "S1001074224001189",
+        "citedby-count": "1",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Nankai University",
+            "affiliation-city": "Tianjin",
+            "affiliation-country": "China"
+          }
+        ],
+        "pubmed-id": "39481959",
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "source-id": "23393",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85210121733"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85210121733?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85210121733&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85210121733&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S138357692400148X"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210121733",
+        "dc:identifier": "SCOPUS_ID:85210121733",
+        "eid": "2-s2.0-85210121733",
+        "dc:title": "Recent advances in identifying and characterizing secretory proteins of Toxoplasma gondii by CRISPR-based screening",
+        "dc:creator": "Tachibana Y.",
+        "prism:publicationName": "Parasitology International",
+        "prism:issn": "13835769",
+        "prism:eIssn": "18730329",
+        "prism:volume": "105",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.parint.2024.102997",
+        "pii": "S138357692400148X",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "WPI Immunology Frontier Research Center, Osaka University",
+            "affiliation-city": "Suita",
+            "affiliation-country": "Japan"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "Research Institute for Microbial Diseases",
+            "affiliation-city": "Suita",
+            "affiliation-country": "Japan"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "re",
+        "subtypeDescription": "Review",
+        "article-number": "102997",
+        "source-id": "22994",
+        "openaccess": "1",
+        "openaccessFlag": true
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85210070258"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85210070258?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85210070258&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85210070258&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S1087079224001357"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210070258",
+        "dc:identifier": "SCOPUS_ID:85210070258",
+        "eid": "2-s2.0-85210070258",
+        "dc:title": "Circadian immunometabolism: A future insight for targeted therapy in cancer",
+        "dc:creator": "Tomar M.S.",
+        "prism:publicationName": "Sleep Medicine Reviews",
+        "prism:issn": "10870792",
+        "prism:eIssn": "15322955",
+        "prism:volume": "80",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.smrv.2024.102031",
+        "pii": "S1087079224001357",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "King George's Medical University",
+            "affiliation-city": "Lucknow",
+            "affiliation-country": "India"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "re",
+        "subtypeDescription": "Review",
+        "article-number": "102031",
+        "source-id": "19837",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85210031723"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85210031723?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85210031723&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85210031723&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0188440924001759"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210031723",
+        "dc:identifier": "SCOPUS_ID:85210031723",
+        "eid": "2-s2.0-85210031723",
+        "dc:title": "Deficiency of miR-155 in leukemic B-cells results in cell cycle arrest and deregulation of MIR155HG/TP53INP1/CDKN1A/CCND1 network",
+        "dc:creator": "Golovina E.",
+        "prism:publicationName": "Archives of Medical Research",
+        "prism:issn": "01884409",
+        "prism:eIssn": "18735487",
+        "prism:volume": "56",
+        "prism:issueIdentifier": "3",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.arcmed.2024.103124",
+        "pii": "S0188440924001759",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Charles University",
+            "affiliation-city": "Prague",
+            "affiliation-country": "Czech Republic"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "103124",
+        "source-id": "27544",
+        "openaccess": "1",
+        "openaccessFlag": true,
+        "freetoread": {
+          "value": "all"
+        },
+        "freetoreadLabel": {
+          "value": "All Open Access"
+        }
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209771279"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209771279?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209771279&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209771279&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0142961224005027"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209771279",
+        "dc:identifier": "SCOPUS_ID:85209771279",
+        "eid": "2-s2.0-85209771279",
+        "dc:title": "Histamine receptor agonism differentially induces immune and reparative healing responses in biomaterial-facilitated tissue repair",
+        "dc:creator": "Yaron J.R.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122967",
+        "pii": "S0142961224005027",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Ira A. Fulton Schools of Engineering",
+            "affiliation-city": "Tempe",
+            "affiliation-country": "United States"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "Arizona State University",
+            "affiliation-city": "Tempe",
+            "affiliation-country": "United States"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122967",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209645773"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209645773?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209645773&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209645773&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0142961224005064"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209645773",
+        "dc:identifier": "SCOPUS_ID:85209645773",
+        "eid": "2-s2.0-85209645773",
+        "dc:title": "Responsive plasmonic hybrid nanorods enables metabolism reprogramming via cuproptosis-photothermal combined cancer therapy",
+        "dc:creator": "Xie Q.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122971",
+        "pii": "S0142961224005064",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Army Medical University",
+            "affiliation-city": "Chongqing",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122971",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209595346"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209595346?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209595346&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209595346&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0142961224005052"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209595346",
+        "dc:identifier": "SCOPUS_ID:85209595346",
+        "eid": "2-s2.0-85209595346",
+        "dc:title": "Remolding probiotics for effective treatment of type 2 diabetes via oral administration",
+        "dc:creator": "Ji H.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122970",
+        "pii": "S0142961224005052",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Nanchang University",
+            "affiliation-city": "Nanchang",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122970",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209246460"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209246460?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209246460&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209246460&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0142961224005039"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209246460",
+        "dc:identifier": "SCOPUS_ID:85209246460",
+        "eid": "2-s2.0-85209246460",
+        "dc:title": "Self-propelling intelligent nanomotor: A dual-action photothermal and starvation strategy for targeted deep tumor destruction",
+        "dc:creator": "Mei L.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122968",
+        "pii": "S0142961224005039",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Chengdu University",
+            "affiliation-city": "Chengdu",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122968",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209102203"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85209102203?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85209102203&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85209102203&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0142961224004964"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209102203",
+        "dc:identifier": "SCOPUS_ID:85209102203",
+        "eid": "2-s2.0-85209102203",
+        "dc:title": "Regulatory T cells engineered with polyphenol-functionalized immunosuppressant nanocomplexes for rebuilding periodontal hard tissue under inflammation-challenged microenvironment",
+        "dc:creator": "Zhang B.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122961",
+        "pii": "S0142961224004964",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "State Key Laboratory of Oral Disease",
+            "affiliation-city": "Chengdu",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122961",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85208994432"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85208994432?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85208994432&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85208994432&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0142961224004915"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85208994432",
+        "dc:identifier": "SCOPUS_ID:85208994432",
+        "eid": "2-s2.0-85208994432",
+        "dc:title": "On-demand reprogramming of immunosuppressive microenvironment in tumor tissue via multi-regulation of carcinogenic microRNAs and RNAs dependent photothermal-immunotherapy using engineered gold nanoparticles for malignant tumor treatment",
+        "dc:creator": "Chen L.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122956",
+        "pii": "S0142961224004915",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Xi'an Jiaotong University",
+            "affiliation-city": "Xi'an",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122956",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85208981482"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85208981482?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85208981482&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85208981482&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S014296122400499X"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85208981482",
+        "dc:identifier": "SCOPUS_ID:85208981482",
+        "eid": "2-s2.0-85208981482",
+        "dc:title": "Self-healing Ppy-hydrogel promotes diabetic skin wound healing through enhanced sterilization and macrophage orchestration triggered by NIR",
+        "dc:creator": "Chu Z.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122964",
+        "pii": "S014296122400499X",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Tongren Hospital Shanghai Jiao Tong University School Of Medicine",
+            "affiliation-city": "Shanghai",
+            "affiliation-country": "China"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "Linyi People's Hospital",
+            "affiliation-city": "Linyi",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122964",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85208961757"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85208961757?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85208961757&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85208961757&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0142961224005040"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85208961757",
+        "dc:identifier": "SCOPUS_ID:85208961757",
+        "eid": "2-s2.0-85208961757",
+        "dc:title": "A NIR-II emissive sonosensitized biotuner for pyroptosis-enhanced sonodynamic therapy of hypoxic tumors",
+        "dc:creator": "Wang X.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122969",
+        "pii": "S0142961224005040",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Hubei University",
+            "affiliation-city": "Wuhan",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122969",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      },
+      {
+        "@_fa": "true",
+        "link": [
+          {
+            "@_fa": "true",
+            "@ref": "self",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85208920433"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "author-affiliation",
+            "@href": "https://api.elsevier.com/content/abstract/scopus_id/85208920433?field=author,affiliation"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus",
+            "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85208920433&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "scopus-citedby",
+            "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85208920433&origin=inward"
+          },
+          {
+            "@_fa": "true",
+            "@ref": "full-text",
+            "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0142961224004976"
+          }
+        ],
+        "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85208920433",
+        "dc:identifier": "SCOPUS_ID:85208920433",
+        "eid": "2-s2.0-85208920433",
+        "dc:title": "Overcoming tumor hypoxic bismuth-based ternary heterojunctions enable defect modulation-augmented tumor sonocatalytic immunotherapy",
+        "dc:creator": "He Z.",
+        "prism:publicationName": "Biomaterials",
+        "prism:issn": "01429612",
+        "prism:eIssn": "18785905",
+        "prism:volume": "315",
+        "prism:pageRange": null,
+        "prism:coverDate": "2025-04-01",
+        "prism:coverDisplayDate": "April 2025",
+        "prism:doi": "10.1016/j.biomaterials.2024.122962",
+        "pii": "S0142961224004976",
+        "citedby-count": "0",
+        "affiliation": [
+          {
+            "@_fa": "true",
+            "affilname": "Shanghai Chest Hospital",
+            "affiliation-city": "Shanghai",
+            "affiliation-country": "China"
+          },
+          {
+            "@_fa": "true",
+            "affilname": "University of Shanghai for Science and Technology",
+            "affiliation-city": "Shanghai",
+            "affiliation-country": "China"
+          }
+        ],
+        "prism:aggregationType": "Journal",
+        "subtype": "ar",
+        "subtypeDescription": "Article",
+        "article-number": "122962",
+        "source-id": "28200",
+        "openaccess": "0",
+        "openaccessFlag": false
+      }
+    ]
+  }
+}
