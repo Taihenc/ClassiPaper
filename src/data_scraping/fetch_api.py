@@ -64,7 +64,6 @@ def create_file(filepath, write_callback, overwrite=True):
         write_callback(f)
 
 
-# for experimenting
 # max count = 25
 def fetch_search_api(query, view=None, count=None):
     params = {
@@ -188,7 +187,10 @@ def fetch_abs_from_url(abs_url, view=None):
 
 # Fetch Abstract Retrieval API from entries in Scopus Search API responses
 # The responses are from $search_dst_dir (should be in './data/scrape/search')
-def fetch_abs_from_searches():
+#
+# NOTE: response from view = 'META' (default) is actually the same as the entry data from searches (I think)
+# TODO: just extract each entries from the search json if view is 'META'
+def fetch_abs_from_searches(view=None):
     searches = os.listdir(f'{search_dst_dir}')
     count = 0
     for search in searches:
@@ -198,7 +200,7 @@ def fetch_abs_from_searches():
         entry = j['entry']
         for e in entry:
             url = e['prism:url']
-            fetch_abs_from_url(url)
+            fetch_abs_from_url(url, view=view)
             count += 1
 
     with open(f'{dst_dir}/abs_count.txt', 'a') as f:
