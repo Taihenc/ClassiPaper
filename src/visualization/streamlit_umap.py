@@ -96,24 +96,56 @@ def plot_3d_scatter_with_labels(reduced_data, clusters, labels, hover_labels):
     )
     return fig
 
+def plot_class_distribution(df, num):
+    # Count the number of instances in each class
+    class_counts = df['Classification Codes'].explode().value_counts().reset_index().head(num)
+    class_counts.columns = ['Class', 'Count']
+
+    # Create a bar chart
+    fig = px.bar(class_counts, x='Class', y='Count', title='Class Distribution', height=600)
+    fig.update_layout(xaxis_title='Classification Code', yaxis_title='Number of Instances')
+    return fig
+
 def main():
     st.set_page_config(page_title="ClassiPaper", layout="wide")
 
     st.title("Paper Research Classification Clustering and Visualization")
 
-    # Load data
-    df = load_mock_data() if use_mock else None
-    predicted_df = load_mock_data() if use_mock else None
-    code_matrix, unique_codes = preprocess_data(df)
-    p_code_matrix, p_unique_codes = preprocess_data(predicted_df)
+    # Sidebar
+    st.sidebar.title("Settings")
+    st.sidebar.subheader("Clustering Settings")
+    n_clusters = st.sidebar.slider("Number of Clusters", min_value=2, max_value=20, value=10)
+    st.sidebar.subheader("Class Distribution Settings")
+    num_classes = st.sidebar.slider("Number of Classes", min_value=10, max_value=100, value=25)
+
+    # Load data in session state
+    if 'actual_df' not in st.session_state:
+        st.session_state['actual_df'] = load_mock_data() if use_mock else None
+        st.session_state['code_matrix'], st.session_state['unique_codes'] = preprocess_data(st.session_state['actual_df'])
+        st.session_state['embeddings'] = generate_embeddings(st.session_state['actual_df'])
+        # st.session_state['reduced_data'], st.session_state['cluster_labels'] = cluster_and_reduce(st.session_state['embeddings'], n_clusters)
+
+    if 'predicted_df' not in st.session_state:
+        st.session_state['predicted_df'] = load_mock_data() if use_mock else None
+        st.session_state['p_code_matrix'], st.session_state['p_unique_codes'] = preprocess_data(st.session_state['predicted_df'])
+        st.session_state['p_embeddings'] = generate_embeddings(st.session_state['predicted_df'])
+        # st.session_state['p_reduced_data'], st.session_state['p_cluster_labels'] = cluster_and_reduce(st.session_state['p_embeddings'], n_clusters)
+
+    # Load data from session state
+    df = st.session_state['actual_df']
+    predicted_df = st.session_state['predicted_df']
+    code_matrix = st.session_state['code_matrix']
+    unique_codes = st.session_state['unique_codes']
+    p_code_matrix = st.session_state['p_code_matrix']
+    p_unique_codes = st.session_state['p_unique_codes']
     
     # Generate embeddings
-    embeddings = generate_embeddings(df)
-    p_embeddings = generate_embeddings(predicted_df)
+    embeddings = st.session_state['embeddings']
+    p_embeddings = st.session_state['p_embeddings']
 
     # Perform clustering and dimensionality reduction
-    reduced_data, cluster_labels = cluster_and_reduce(embeddings)
-    p_reduced_data, p_cluster_labels = cluster_and_reduce(p_embeddings)
+    reduced_data, cluster_labels = cluster_and_reduce(embeddings, n_clusters)
+    p_reduced_data, p_cluster_labels = cluster_and_reduce(p_embeddings, n_clusters)
 
     # Hierarchical clustering and dendrogram
     # st.header("Dendrogram of Classification Codes")
@@ -129,26 +161,29 @@ def main():
     with col1:
         # UMAP 3D Scatter Plot (actual)
         fig_scatter = plot_3d_scatter_with_labels(reduced_data, unique_codes, cluster_labels, df['Classification Codes'])
-        fig_scatter.update_layout(height=800, title="3D UMAP Clustering of Actual Data")
+        fig_scatter.update_layout(height=650, title="3D UMAP Clustering of Actual Data")
         st.plotly_chart(fig_scatter)
 
-        show_data = st.checkbox("Actual Dataset Preview")
-        if show_data:
+        show_actual_data = st.checkbox("Actual Dataset Preview")
+        if show_actual_data:
             st.dataframe(df)
 
     with col2:
         # UMAP 3D Scatter Plot (predicted)
         fig_scatter = plot_3d_scatter_with_labels(p_reduced_data, p_unique_codes, p_cluster_labels, predicted_df['Classification Codes'])
-        fig_scatter.update_layout(height=800, title="3D UMAP Clustering of Predicted Data")
+        fig_scatter.update_layout(height=650, title="3D UMAP Clustering of Predicted Data")
         st.plotly_chart(fig_scatter)
 
-        show_data = st.checkbox("Predicted Dataset Preview")
-        if show_data:
+        show_predicted_data = st.checkbox("Predicted Dataset Preview")
+        if show_predicted_data:
             st.dataframe(predicted_df)
 
-    st.write(code_matrix.shape)
+    st.markdown("---")
 
-    st.write(len(unique_codes))
+    # Class distribution bar chart
+    st.header("Classification Code Distribution")
+    fig_class_dist = plot_class_distribution(df, num_classes)
+    st.plotly_chart(fig_class_dist)
 
 if __name__ == "__main__":
     main()
