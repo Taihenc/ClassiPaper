@@ -11,11 +11,12 @@ from sklearn.cluster import KMeans
 from scipy.cluster.hierarchy import linkage, dendrogram
 from sklearn.preprocessing import MultiLabelBinarizer
 import plotly.figure_factory as ff
+from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import jaccard_score
 
 # Use mock or not
 use_mock = True
 
-@st.cache_data
 def load_mock_data():
     faker = Faker()
     data = []
@@ -54,10 +55,41 @@ def cluster_and_reduce(embeddings, n_clusters=10):
     cluster_labels = kmeans.fit_predict(reduced_data)
     return reduced_data, cluster_labels
 
-def plot_dendrogram(matrix, labels):
-    Z = linkage(matrix, 'ward')
-    fig = ff.create_dendrogram(Z, orientation='right', labels=labels)
-    fig.update_layout(width=800, height=800)
+def precompute_clusters(embeddings, max_clusters=20):
+    cluster_results = {}
+    for n_clusters in range(2, max_clusters + 1):
+        reduced_data, cluster_labels = cluster_and_reduce(embeddings, n_clusters)
+        cluster_results[n_clusters] = (reduced_data, cluster_labels)
+    return cluster_results
+
+def compute_error_analysis(actual_df, predicted_df):
+    results = []
+    for i, (actual_codes, predicted_codes) in enumerate(zip(actual_df['Classification Codes'], predicted_df['Classification Codes'])):
+        actual_set = set(actual_codes)
+        predicted_set = set(predicted_codes)
+
+        # Compute Jaccard similarity
+        jaccard = len(actual_set & predicted_set) / len(actual_set | predicted_set) if len(actual_set | predicted_set) > 0 else 0
+
+        # Store results
+        results.append({
+            'Paper ID': i,
+            'Actual Codes': actual_codes,
+            'Predicted Codes': predicted_codes,
+            'Jaccard Similarity': jaccard
+        })
+    return pd.DataFrame(results)
+
+def plot_error_analysis(errors_df):
+    fig = px.histogram(
+        errors_df, 
+        x='Jaccard Similarity', 
+        title='Distribution of Jaccard Similarities',
+        nbins=20,
+        labels={'x': 'Jaccard Similarity'},
+        height=600
+    )
+    fig.update_layout(xaxis_title='Jaccard Similarity', yaxis_title='Count')
     return fig
 
 def plot_3d_scatter_with_labels(reduced_data, clusters, labels, hover_labels):
@@ -102,19 +134,22 @@ def plot_class_distribution(df, num):
     class_counts.columns = ['Class', 'Count']
 
     # Create a bar chart
-    fig = px.bar(class_counts, x='Class', y='Count', title='Class Distribution', height=600)
+    fig = px.bar(class_counts, x='Class', y='Count', title='Class Distribution', height=600, color='Class')
     fig.update_layout(xaxis_title='Classification Code', yaxis_title='Number of Instances')
     return fig
 
 def main():
     st.set_page_config(page_title="ClassiPaper", layout="wide")
 
-    st.title("Paper Research Classification Clustering and Visualization")
+    st.title("Paper Research Classification Prediction Clustering and Visualization")
+
+    st.write("")
+    st.write("")
 
     # Sidebar
     st.sidebar.title("Settings")
-    st.sidebar.subheader("Clustering Settings")
-    n_clusters = st.sidebar.slider("Number of Clusters", min_value=2, max_value=20, value=10)
+    # st.sidebar.subheader("Clustering Settings")
+    # n_clusters = st.sidebar.slider("Number of Clusters", min_value=2, max_value=20, value=10)
     st.sidebar.subheader("Class Distribution Settings")
     num_classes = st.sidebar.slider("Number of Classes", min_value=10, max_value=100, value=25)
 
@@ -123,13 +158,15 @@ def main():
         st.session_state['actual_df'] = load_mock_data() if use_mock else None
         st.session_state['code_matrix'], st.session_state['unique_codes'] = preprocess_data(st.session_state['actual_df'])
         st.session_state['embeddings'] = generate_embeddings(st.session_state['actual_df'])
-        # st.session_state['reduced_data'], st.session_state['cluster_labels'] = cluster_and_reduce(st.session_state['embeddings'], n_clusters)
+        st.session_state['reduced_data'], st.session_state['cluster_labels'] = cluster_and_reduce(st.session_state['embeddings'])
+        # st.session_state['cluster_results'] = precompute_clusters(st.session_state['embeddings'])
 
     if 'predicted_df' not in st.session_state:
         st.session_state['predicted_df'] = load_mock_data() if use_mock else None
         st.session_state['p_code_matrix'], st.session_state['p_unique_codes'] = preprocess_data(st.session_state['predicted_df'])
         st.session_state['p_embeddings'] = generate_embeddings(st.session_state['predicted_df'])
-        # st.session_state['p_reduced_data'], st.session_state['p_cluster_labels'] = cluster_and_reduce(st.session_state['p_embeddings'], n_clusters)
+        st.session_state['p_reduced_data'], st.session_state['p_cluster_labels'] = cluster_and_reduce(st.session_state['p_embeddings'])
+        # st.session_state['p_cluster_results'] = precompute_clusters(st.session_state['p_embeddings'])
 
     # Load data from session state
     df = st.session_state['actual_df']
@@ -140,17 +177,14 @@ def main():
     p_unique_codes = st.session_state['p_unique_codes']
     
     # Generate embeddings
-    embeddings = st.session_state['embeddings']
-    p_embeddings = st.session_state['p_embeddings']
+    # embeddings = st.session_state['embeddings']
+    # p_embeddings = st.session_state['p_embeddings']
 
     # Perform clustering and dimensionality reduction
-    reduced_data, cluster_labels = cluster_and_reduce(embeddings, n_clusters)
-    p_reduced_data, p_cluster_labels = cluster_and_reduce(p_embeddings, n_clusters)
-
-    # Hierarchical clustering and dendrogram
-    # st.header("Dendrogram of Classification Codes")
-    # fig_dendrogram = plot_dendrogram(code_matrix, unique_codes)
-    # st.plotly_chart(fig_dendrogram, use_container_width=True)
+    reduced_data, cluster_labels = st.session_state['reduced_data'], st.session_state['cluster_labels']
+    p_reduced_data, p_cluster_labels = st.session_state['p_reduced_data'], st.session_state['p_cluster_labels']
+    # reduced_data, cluster_labels = st.session_state['cluster_results'][n_clusters]
+    # p_reduced_data, p_cluster_labels = st.session_state['p_cluster_results'][n_clusters]
 
     # UMAP clustering visualization
     st.header("UMAP Clustering Visualization")
@@ -184,6 +218,34 @@ def main():
     st.header("Classification Code Distribution")
     fig_class_dist = plot_class_distribution(df, num_classes)
     st.plotly_chart(fig_class_dist)
+
+    st.markdown("---")
+
+    if st.sidebar.checkbox("Show Error Analysis", value=True):
+        st.header("Error Analysis Between Actual and Predicted Data")
+
+        st.write("")
+        st.write("")
+
+        # Compute error analysis
+        errors_df = compute_error_analysis(df, predicted_df)
+
+        # Display a summary of error metrics
+        st.subheader("Error Metrics Summary")
+        avg_jaccard = errors_df['Jaccard Similarity'].mean()
+        st.write(f"**Average Jaccard Similarity:** {avg_jaccard:.2f}")
+
+        st.write("")
+        st.write("")
+
+        # Plot error distribution
+        st.subheader("Error Distribution")
+        fig_error_dist = plot_error_analysis(errors_df)
+        st.plotly_chart(fig_error_dist)
+
+        # Show detailed error table
+        st.subheader("Detailed Error Analysis")
+        st.dataframe(errors_df)
 
 if __name__ == "__main__":
     main()
