@@ -33,7 +33,6 @@ def load_mock_data():
     df = pd.DataFrame(data)
     return df
 
-@st.cache_data
 def preprocess_data(df):
     # Extract unique codes
     unique_codes = sorted(set(code for codes in df['Classification Codes'] for code in codes))
@@ -83,7 +82,7 @@ def plot_3d_scatter_with_labels(reduced_data, clusters, labels, hover_labels):
         z='UMAP Dimension 3',
         color='Cluster',  # Color by cluster
         hover_data=['Classes'],  # Hover details
-        title='3D UMAP Clustering with Labels'
+        category_orders={'Cluster': list(cluster_map.values())}  # Order clusters
     )
 
     # Update layout for clarity
@@ -97,55 +96,59 @@ def plot_3d_scatter_with_labels(reduced_data, clusters, labels, hover_labels):
     )
     return fig
 
-
-
-def plot_3d_scatter(reduced_data, labels, clusters, hover_labels):
-    umap_df = pd.DataFrame({
-        'UMAP Dimension 1': reduced_data[:, 0],
-        'UMAP Dimension 2': reduced_data[:, 1],
-        'UMAP Dimension 3': reduced_data[:, 2],
-        'Classes': clusters,
-        'Hover Label': hover_labels
-    })
-    fig = px.scatter_3d(
-        umap_df, 
-        x='UMAP Dimension 1', 
-        y='UMAP Dimension 2', 
-        z='UMAP Dimension 3', 
-        color='Classes',
-        hover_data=['Hover Label'],
-        title='3D UMAP Clustering'
-    )
-    return fig, umap_df
-
 def main():
+    st.set_page_config(page_title="ClassiPaper", layout="wide")
+
     st.title("Paper Research Classification Clustering and Visualization")
 
     # Load data
     df = load_mock_data() if use_mock else None
+    predicted_df = load_mock_data() if use_mock else None
     code_matrix, unique_codes = preprocess_data(df)
+    p_code_matrix, p_unique_codes = preprocess_data(predicted_df)
     
     # Generate embeddings
     embeddings = generate_embeddings(df)
+    p_embeddings = generate_embeddings(predicted_df)
 
     # Perform clustering and dimensionality reduction
     reduced_data, cluster_labels = cluster_and_reduce(embeddings)
+    p_reduced_data, p_cluster_labels = cluster_and_reduce(p_embeddings)
 
     # Hierarchical clustering and dendrogram
     # st.header("Dendrogram of Classification Codes")
     # fig_dendrogram = plot_dendrogram(code_matrix, unique_codes)
     # st.plotly_chart(fig_dendrogram, use_container_width=True)
 
-    # UMAP 3D Scatter Plot
+    # UMAP clustering visualization
     st.header("UMAP Clustering Visualization")
-    # fig_scatter, udf = plot_3d_scatter(reduced_data, unique_codes, cluster_labels, df['Title'])
-    fig_scatter = plot_3d_scatter_with_labels(reduced_data, unique_codes, cluster_labels, df['Classification Codes'])
-    fig_scatter.update_layout(height=600, width=5000)
-    st.plotly_chart(fig_scatter, use_container_width=True)
 
-    show_data = st.checkbox("Dataset Preview")
-    if show_data:
-        st.dataframe(df)
+    # umap actual and predicted data cols
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # UMAP 3D Scatter Plot (actual)
+        fig_scatter = plot_3d_scatter_with_labels(reduced_data, unique_codes, cluster_labels, df['Classification Codes'])
+        fig_scatter.update_layout(height=800, title="3D UMAP Clustering of Actual Data")
+        st.plotly_chart(fig_scatter)
+
+        show_data = st.checkbox("Actual Dataset Preview")
+        if show_data:
+            st.dataframe(df)
+
+    with col2:
+        # UMAP 3D Scatter Plot (predicted)
+        fig_scatter = plot_3d_scatter_with_labels(p_reduced_data, p_unique_codes, p_cluster_labels, predicted_df['Classification Codes'])
+        fig_scatter.update_layout(height=800, title="3D UMAP Clustering of Predicted Data")
+        st.plotly_chart(fig_scatter)
+
+        show_data = st.checkbox("Predicted Dataset Preview")
+        if show_data:
+            st.dataframe(predicted_df)
+
+    st.write(code_matrix.shape)
+
+    st.write(len(unique_codes))
 
 if __name__ == "__main__":
     main()
