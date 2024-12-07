@@ -147,7 +147,7 @@ def generate_cooccurrence_network(df):
     
     return G
 
-def plot_network(G, top_n=None, node_size=None):
+def plot_network(G, top_n=None, node_size=None, show_edges=True, show_labels=True):
     """Plot a co-occurrence network using Plotly."""
     # Calculate degree centrality for sizing
     centrality = nx.degree_centrality(G)
@@ -163,11 +163,12 @@ def plot_network(G, top_n=None, node_size=None):
     # Create edge traces
     edge_x = []
     edge_y = []
-    for edge in G.edges(data=True):
-        x0, y0 = pos[edge[0]]
-        x1, y1 = pos[edge[1]]
-        edge_x += [x0, x1, None]
-        edge_y += [y0, y1, None]
+    if show_edges:
+        for edge in G.edges(data=True):
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            edge_x += [x0, x1, None]
+            edge_y += [y0, y1, None]
 
     edge_trace = go.Scatter(
         x=edge_x,
@@ -182,17 +183,20 @@ def plot_network(G, top_n=None, node_size=None):
     node_y = []
     node_text = []
     node_sizes = []
+    hover_text = []
     for node in G.nodes():
         x, y = pos[node]
         node_x.append(x)
         node_y.append(y)
-        node_text.append(f"{node} (Degree: {G.degree[node]})")
+        # node_text.append(f"{node} (Degree: {G.degree[node]})")
+        node_text.append(node)
         node_sizes.append(node_size * centrality[node] * 5)
+        hover_text.append(f"{node} (Degree: {G.degree[node]})")
 
     node_trace = go.Scatter(
         x=node_x,
         y=node_y,
-        mode='markers',
+        mode='markers+text' if show_labels else 'markers',
         marker=dict(
             size=node_sizes,
             color=node_sizes,
@@ -205,11 +209,13 @@ def plot_network(G, top_n=None, node_size=None):
             )
         ),
         text=node_text,
-        hoverinfo='text'
+        textposition='top center' if show_labels else 'top center',
+        hoverinfo='text',
+        hovertext=hover_text
     )
 
     # Combine edge and node traces
-    fig = go.Figure(data=[edge_trace, node_trace])
+    fig = go.Figure(data=[edge_trace, node_trace] if show_edges else [node_trace])
     fig.update_layout(
         title="Classification Codes Co-occurrence Network",
         showlegend=False,
@@ -301,8 +307,11 @@ def main():
     st.sidebar.subheader("Network Settings")
     top_n = st.sidebar.slider("Number of Top Nodes to Display", 10, len(G.nodes), value=20)
     node_size = st.sidebar.slider("Node Size", 1, 20, value=10)
+    show_edges = st.sidebar.checkbox("Show Edges", value=True)
+    show_labels = st.sidebar.checkbox("Show Class Names", value=True)
     st.sidebar.markdown("---")
-    fig_network = plot_network(G, top_n=top_n, node_size=node_size)
+
+    fig_network = plot_network(G, top_n=top_n, node_size=node_size, show_edges=show_edges, show_labels=show_labels)
     st.plotly_chart(fig_network)
 
     # Network statistics
@@ -325,6 +334,8 @@ def main():
 
     st.markdown("---")
 
+    # Error analysis settings
+    st.sidebar.subheader("Error Analysis Settings")
     if st.sidebar.checkbox("Show Error Analysis", value=True):
         st.header("Error Analysis Between Actual and Predicted Data")
 
