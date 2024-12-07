@@ -1,18 +1,14 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from scipy.sparse import csr_matrix
 import plotly.express as px
 from faker import Faker
+import plotly.graph_objects as go
 from umap import UMAP
-from sklearn.decomposition import PCA
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
-from scipy.cluster.hierarchy import linkage, dendrogram
 from sklearn.preprocessing import MultiLabelBinarizer
-import plotly.figure_factory as ff
-from sklearn.metrics import precision_score, recall_score, f1_score
-from sklearn.metrics import jaccard_score
+import networkx as nx
 
 # Use mock or not
 use_mock = True
@@ -135,6 +131,94 @@ def plot_class_distribution(df, num):
     fig.update_layout(xaxis_title='Percentage', yaxis_title='Classification Code')
     return fig
 
+def generate_cooccurrence_network(df):
+    """Generate a co-occurrence graph of classification codes."""
+    # Initialize the graph
+    G = nx.Graph()
+
+    # Add edges based on co-occurrence
+    for codes in df['Classification Codes']:
+        for i, code1 in enumerate(codes):
+            for code2 in codes[i+1:]:
+                if G.has_edge(code1, code2):
+                    G[code1][code2]['weight'] += 1
+                else:
+                    G.add_edge(code1, code2, weight=1)
+    
+    return G
+
+def plot_network(G, top_n=None, node_size=None):
+    """Plot a co-occurrence network using Plotly."""
+    # Calculate degree centrality for sizing
+    centrality = nx.degree_centrality(G)
+
+    # Extract the top N nodes by degree centrality if specified
+    if top_n:
+        top_nodes = sorted(centrality, key=centrality.get, reverse=True)[:top_n]
+        G = G.subgraph(top_nodes)
+
+    # Generate positions for nodes
+    pos = nx.spring_layout(G, seed=42)
+
+    # Create edge traces
+    edge_x = []
+    edge_y = []
+    for edge in G.edges(data=True):
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
+        edge_x += [x0, x1, None]
+        edge_y += [y0, y1, None]
+
+    edge_trace = go.Scatter(
+        x=edge_x,
+        y=edge_y,
+        line=dict(width=0.5, color='#888'),
+        hoverinfo='none',
+        mode='lines'
+    )
+
+    # Create node traces
+    node_x = []
+    node_y = []
+    node_text = []
+    node_sizes = []
+    for node in G.nodes():
+        x, y = pos[node]
+        node_x.append(x)
+        node_y.append(y)
+        node_text.append(f"{node} (Degree: {G.degree[node]})")
+        node_sizes.append(node_size * centrality[node] * 5)
+
+    node_trace = go.Scatter(
+        x=node_x,
+        y=node_y,
+        mode='markers',
+        marker=dict(
+            size=node_sizes,
+            color=node_sizes,
+            colorscale='Viridis',
+            showscale=True,
+            colorbar=dict(
+                title="Centrality",
+                xanchor='left',
+                titleside='right'
+            )
+        ),
+        text=node_text,
+        hoverinfo='text'
+    )
+
+    # Combine edge and node traces
+    fig = go.Figure(data=[edge_trace, node_trace])
+    fig.update_layout(
+        title="Classification Codes Co-occurrence Network",
+        showlegend=False,
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        height=600
+    )
+    return fig
+
 def main():
     st.set_page_config(page_title="ClassiPaper", layout="wide")
 
@@ -174,8 +258,6 @@ def main():
 
     # Sidebar
     st.sidebar.title("Settings")
-    st.sidebar.subheader("Class Distribution Settings")
-    num_classes = st.sidebar.slider("Number of Classes", min_value=10, max_value=len(unique_codes), value=10)
 
     # UMAP clustering visualization
     st.header("UMAP Clustering Visualization")
@@ -210,6 +292,32 @@ def main():
 
     st.markdown("---")
 
+    st.header("Classification Codes Network Analysis")
+
+    # Generate and plot the co-occurrence network
+    G = generate_cooccurrence_network(df)
+
+    # Display network with top N nodes (optional)
+    st.sidebar.subheader("Network Settings")
+    top_n = st.sidebar.slider("Number of Top Nodes to Display", 10, len(G.nodes), value=20)
+    node_size = st.sidebar.slider("Node Size", 1, 20, value=10)
+    st.sidebar.markdown("---")
+    fig_network = plot_network(G, top_n=top_n, node_size=node_size)
+    st.plotly_chart(fig_network)
+
+    # Network statistics
+    st.subheader("Network Statistics")
+    st.write(f"**Number of Nodes:** {G.number_of_nodes()}")
+    st.write(f"**Number of Edges:** {G.number_of_edges()}")
+    st.write(f"**Average Degree:** {np.mean([d for n, d in G.degree()]):.2f}")
+
+    st.markdown("---")
+
+    # Class distribution settings
+    st.sidebar.subheader("Class Distribution Settings")
+    num_classes = st.sidebar.slider("Number of Classes", min_value=10, max_value=len(unique_codes), value=10)
+    st.sidebar.markdown("---")
+
     # Class distribution bar chart
     st.header("Classification Code Distribution")
     fig_class_dist = plot_class_distribution(df, num_classes)
@@ -243,6 +351,7 @@ def main():
         # Show detailed error table
         st.subheader("Detailed Error Analysis")
         st.dataframe(errors_df)
+
 
 if __name__ == "__main__":
     main()
