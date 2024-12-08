@@ -33,6 +33,10 @@ extract:
 	$(EXTRACT_SCRAPED_CMD)
 
 clean_raw_data:
+	@echo "Cleaning raw data..."
+	@python "./src/data_engineering/clean.py"
+
+clear_raw_data:
 	@rm -rf $(RAW_PROVIDED_DIR)/*
 	@rm -rf $(RAW_SCRAPED_DIR)/*
 
