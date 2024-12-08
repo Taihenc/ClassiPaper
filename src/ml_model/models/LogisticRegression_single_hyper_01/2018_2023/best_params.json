@@ -1,0 +1,5 @@
+{
+    "classifier__C": 0.018794668241638456,
+    "classifier__penalty": "l2",
+    "pca__n_components": 256
+}
