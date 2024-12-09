@@ -9,6 +9,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MultiLabelBinarizer
 import networkx as nx
+from transformers import AutoTokenizer, AutoModel
+import torch
 
 # Use mock or not
 use_mock = True
@@ -34,10 +36,30 @@ def preprocess_data(df):
     code_matrix = mlb.fit_transform(df['Classification Codes'])
     return code_matrix, unique_codes
 
+# def generate_combined_embeddings(df, code_matrix):
+#     # Generate embeddings from the Abstract field
+#     vectorizer = TfidfVectorizer(max_features=100)
+#     abstract_embeddings = vectorizer.fit_transform(df['Abstract']).toarray()
+    
+#     # Combine Abstract embeddings with the Classification Codes matrix
+#     combined_embeddings = np.hstack((abstract_embeddings, code_matrix))
+#     return combined_embeddings
+
 def generate_combined_embeddings(df, code_matrix):
-    # Generate embeddings from the Abstract field
-    vectorizer = TfidfVectorizer(max_features=100)
-    abstract_embeddings = vectorizer.fit_transform(df['Abstract']).toarray()
+    # Load pre-trained transformer model and tokenizer
+    tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')  # You can use any other model
+    model = AutoModel.from_pretrained('bert-base-uncased')
+    
+    # Function to encode the abstracts using the transformer model
+    def encode_abstracts(abstracts):
+        inputs = tokenizer(abstracts, padding=True, truncation=True, return_tensors="pt", max_length=512)
+        with torch.no_grad():
+            outputs = model(**inputs)
+        # Return the embeddings (last hidden state of the model)
+        return outputs.last_hidden_state.mean(dim=1).numpy()  # Averaging the token embeddings to get a single vector per abstract
+    
+    # Generate embeddings for the abstracts
+    abstract_embeddings = encode_abstracts(df['Abstract'].tolist())
     
     # Combine Abstract embeddings with the Classification Codes matrix
     combined_embeddings = np.hstack((abstract_embeddings, code_matrix))
