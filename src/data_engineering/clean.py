@@ -1,17 +1,19 @@
 import os
 import re
+from functools import reduce
 from dotenv import load_dotenv
 import json
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, udf, array_join, when, explode_outer, collect_list, concat_ws, coalesce, lit, lower, trim, regexp_replace
-from pyspark.sql.types import StringType, ArrayType, StructType, StructField, StringType, MapType 
+from pyspark.sql.functions import col, udf, array_join, when, explode_outer, collect_list, concat_ws, coalesce, lit, lower, trim, regexp_replace, first
+from pyspark.sql import functions as F
+from pyspark.sql.types import StringType, ArrayType, StructType, StructField, StringType
 
 from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-# Initialize Spark session using environment variables
+# Initialize Spark session
 spark: SparkSession = SparkSession.builder \
     .master(os.getenv("SPARK_URL", "local[*]")) \
     .appName("DataCleaningWithSpark") \
@@ -22,25 +24,27 @@ spark: SparkSession = SparkSession.builder \
     .config("spark.driver.maxResultSize", "2g") \
     .getOrCreate()
 
-# Load environment variables
+# Load directories from environment variables
 base_data_dirs = [path.strip().strip('"') for path in os.getenv("BASE_DATA_DIR", "").split(",")]
 base_cleaned_dir = os.getenv("BASE_CLEANED_DIR", "").strip().strip('"')
 
 # Define cleaning functions
 def clean_text(text):
+    """Cleans text by removing non-alphabet characters and stop words."""
     if not isinstance(text, str):
         return ''
-    text = re.sub(r'[^a-zA-Z\s]', '', text)
-    text = text.lower()
+    text = re.sub(r'[^a-zA-Z\s]', '', text).lower()
     tokens = [word for word in text.split() if word not in ENGLISH_STOP_WORDS]
-    return ''.join(tokens)
+    return ' '.join(tokens)
 
 def clean_keywords(keywords):
+    """Cleans keyword list by removing stop words and duplicates."""
     if not isinstance(keywords, list):
         return []
-    return list(set([kw for kw in keywords if kw not in ENGLISH_STOP_WORDS and len(kw) > 1]))
+    return list(set(kw for kw in keywords if kw not in ENGLISH_STOP_WORDS and len(kw) > 1))
 
 def clean_title(title):
+    """Cleans and formats title by removing leading articles."""
     if not isinstance(title, str) or not title.strip():
         return ''
     title = title.title()
@@ -51,6 +55,7 @@ def clean_title(title):
     return title
 
 def clean_abstract(abstract):
+    """Cleans abstract by removing non-ASCII characters."""
     if not isinstance(abstract, str):
         return ''
     abstract = re.sub(r'[^\x00-\x7F]+', '', abstract)
@@ -62,19 +67,24 @@ clean_keywords_udf = udf(clean_keywords, ArrayType(StringType()))
 clean_title_udf = udf(clean_title, StringType())
 clean_abstract_udf = udf(clean_abstract, StringType())
 
-# Define the schema
+# Define the schema for input JSON files
 schema = StructType([
     StructField("abstracts-retrieval-response", StructType([
         StructField("coredata", StructType([
-            StructField("dc:title", StringType(), True),       # Title field, nullable
-            StructField("dc:description", StringType(), True) # Description field, nullable
-        ]), True),                                           # coredata struct, nullable
-        StructField("authkeywords", StructType([            # authkeywords struct
+            StructField("dc:title", StringType(), True),
+            StructField("dc:description", StringType(), True)
+        ]), True),
+        StructField("authkeywords", StructType([
             StructField("author-keyword", ArrayType(
                 StructType([StructField("$", StringType(), True)])
             ), True)
+        ]), True),
+        StructField("subject-areas", StructType([
+            StructField("subject-area", ArrayType(
+                StructType([StructField("$", StringType(), True)])
+            ), True)
         ]), True)
-    ]), True)                                                # abstracts-retrieval-response struct, nullable
+    ]), True)
 ])
 
 # Load and process files
@@ -82,61 +92,70 @@ dataframes = []
 
 for data_dir in base_data_dirs:
     if not os.path.exists(data_dir):
-        print(f"Warning: The directory {data_dir} does not exist.")
+        print(f"Warning: Directory {data_dir} does not exist. Skipping.")
         continue
 
-    # Iterate over all files in the directory
-    # print how many files are in the directory
-    print(f"Processing files in {data_dir} with {len(os.listdir(data_dir))} files")
-    for root, dirs, files in os.walk(data_dir):
-        for file in files:
-            file_path = os.path.join(root, file)
-            # print(f"Processing file: {file_path}")
+    files = [os.path.join(root, file) for root, _, files in os.walk(data_dir) for file in files]
+    print(f"Processing {len(files)} files in directory: {data_dir}")
 
-            try:
-                # Load data
-                df = spark.read.json(file_path, multiLine=True, schema=schema)
+    for file_path in files:
+        try:
+            # Read JSON file into Spark DataFrame
+            df = spark.read.json(file_path, multiLine=True, schema=schema)
 
-                # df.show(truncate=False)
-                # df.printSchema()
+            # Exploding the 'author-keyword' first
+            df_keywords = df.select(
+                coalesce(col("abstracts-retrieval-response.coredata.dc:title"), lit("")).alias("title"),
+                coalesce(col("abstracts-retrieval-response.coredata.dc:description"), lit("")).alias("description"),
+                explode_outer(col("abstracts-retrieval-response.authkeywords.author-keyword")).alias("author_keyword_struct")
+            )
 
-                # Process the data
-                df_processed = df.select(
-                    coalesce(col("abstracts-retrieval-response.coredata.dc:title"), lit("")).alias("title"),
-                    coalesce(col("abstracts-retrieval-response.coredata.dc:description"), lit("")).alias("description"),
-                    explode_outer(
-                        col("abstracts-retrieval-response.authkeywords.author-keyword")
-                    ).alias("author_keyword_struct")  # Explode first
-                ).select(
-                    col("title"),
-                    col("description"),
-                    col("author_keyword_struct.$").alias("author_keyword")  # Extract the "$" field
-                ).groupBy("title", "description").agg(
-                    concat_ws(" ", collect_list("author_keyword")).alias("keywords")  # Concatenate keywords with space
-                )
+            # Exploding the 'subject-area' second
+            df_subjects = df.select(
+                coalesce(col("abstracts-retrieval-response.coredata.dc:title"), lit("")).alias("title"),
+                coalesce(col("abstracts-retrieval-response.coredata.dc:description"), lit("")).alias("description"),
+                explode_outer(col("abstracts-retrieval-response.subject-areas.subject-area")).alias("subject_area_struct")
+            )
 
-                # # Show the result
-                # df_processed.show(1)
-                # df_processed.printSchema()
+            # Now, extract the string from the struct (i.e., access the "$" field for each keyword and subject area)
+            df_keywords = df_keywords.withColumn("author_keyword", col("author_keyword_struct.$"))
+            df_subjects = df_subjects.withColumn("subject_area", col("subject_area_struct.$"))
 
-                # Append to the list of DataFrames
-                dataframes.append(df_processed)
-            except Exception as e:
-                print(f"Error processing file {file_path}: {e}")
-                
-# Combine DataFrames safely
-if len(dataframes) == 1:
-    combined_df = dataframes[0]  # Only one DataFrame, no union needed
-else:
-    combined_df = dataframes[0]
-    for df in dataframes[1:]:
-        combined_df = combined_df.unionByName(df)
+            # Filter out rows where subject_area is null or empty
+            df_subjects = df_subjects.filter(col("subject_area").isNotNull() & (col("subject_area") != "") & col("subject_area").endswith("(all)"))
 
-# Process and clean data
+            # If no valid subject_area is found, skip the file
+            if df_subjects.count() == 0:
+                continue
+
+            # Now, handle the case where subject-area is a single value
+            df_subjects_single = df_subjects.groupBy("title", "description").agg(
+                first("subject_area").alias("subject_area")
+            )
+
+            # Join with the df_keywords (processed keywords) DataFrame
+            df_combined = df_keywords.join(df_subjects_single, on=["title", "description"], how="left_outer")
+
+            # Continue with the remaining aggregation and cleaning...
+            df_processed = df_combined.groupBy("title", "description").agg(
+                concat_ws(" ", collect_list("author_keyword")).alias("keywords"),
+                first("subject_area").alias("subject_area")
+            )
+
+            dataframes.append(df_processed)
+        except Exception as e:
+            print(f"Error processing file {file_path}: {e}")
+
+# Combine all DataFrames into one
+if dataframes:
+    combined_df = reduce(lambda df1, df2: df1.unionByName(df2), dataframes)
+
+  # Process and clean data
 processed_df = combined_df.select(
     lower(trim(regexp_replace(col("title"), r"[^a-zA-Z\s]", ""))).alias("clean_title"),
     lower(trim(regexp_replace(col("description"), r"[^a-zA-Z\s]", ""))).alias("clean_abstract"),
-    lower(trim(regexp_replace(col("keywords"), r"[^a-zA-Z\s]", ""))).alias("clean_keywords")
+    lower(trim(regexp_replace(col("keywords"), r"[^a-zA-Z\s]", ""))).alias("clean_keywords"),
+    trim(col("subject_area")).alias("clean_subject_area")
 )
 
 # Convert to a list of dictionaries
