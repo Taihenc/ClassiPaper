@@ -1,44 +1,45 @@
-import { useState } from 'react'
-import { TextField, Button, Typography } from '@mui/material'
-import './App.css'
+import { useState } from "react";
+import { TextField, Button, Typography } from "@mui/material";
+import "./App.css";
 
 interface Result {
-  predicted_subject_area: [string]
-  title: [string]
-  abstract: [string]
-  keywords: [string]
+  predicted_subject_area: [string];
+  title: [string];
+  abstract: [string];
+  keywords: [string];
 }
 
 function App() {
-  const [title, setTitle] = useState('')
-  const [abstract, setAbstract] = useState('')
-  const [keywords, setKeywords] = useState('')
-  const [result, setResult] = useState<Result | null>(null)
+  const [title, setTitle] = useState("");
+  const [abstract, setAbstract] = useState("");
+  const [keywords, setKeywords] = useState("");
+  const [result, setResult] = useState<Result | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const data = { 
-      'title': [title], 
-      'abstract': [abstract], 
-      'keywords': [keywords] }
+    e.preventDefault();
+    const data = {
+      title: [title],
+      abstract: [abstract],
+      keywords: [keywords],
+    };
 
-    console.log(data)
+    console.log(data);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/pred', {
-        method: 'POST',
+      const response = await fetch("http://127.0.0.1:5000/pred", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
-      const res = await response.json()
-      setResult(res)
-      console.log(res)
+      });
+      const res = await response.json();
+      setResult(res);
+      console.log(res);
     } catch (error) {
-      console.error('Error:', error)
+      console.error("Error:", error);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6 font-serif">
@@ -72,7 +73,12 @@ function App() {
           onChange={(e) => setKeywords(e.target.value)}
           className="w-full"
         />
-        <Button type="submit" variant="contained" color="success" className="w-full bg-black">
+        <Button
+          type="submit"
+          variant="contained"
+          color="success"
+          className="w-full bg-black"
+        >
           Predict
         </Button>
 
@@ -82,15 +88,21 @@ function App() {
             Result
           </Typography>
           <pre className="text-gray-600 pt-8">
-            {!result ? 'The result will appear here...' :
+            {!result ? (
+              "The result will appear here..."
+            ) : (
               <div>
-              <p><strong>Predicted Subject Area:</strong> {result?.predicted_subject_area}</p>
-            </div>}
+                <p className="text-ellipsis whitespace-normal">
+                  <strong>Predicted Subject Area:</strong>{" "}
+                  {result?.predicted_subject_area}
+                </p>
+              </div>
+            )}
           </pre>
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
