@@ -27,6 +27,7 @@ spark: SparkSession = SparkSession.builder \
 # Load directories from environment variables
 base_data_dirs = [path.strip().strip('"') for path in os.getenv("BASE_DATA_DIR", "").split(",")]
 base_cleaned_dir = os.getenv("BASE_CLEANED_DIR", "").strip().strip('"')
+base_cleaned_file = os.getenv("BASE_CLEANED_FILE", "").strip().strip('"')
 
 # Define the schema for input JSON files
 schema = StructType([
@@ -125,7 +126,7 @@ data = processed_df.toPandas().to_dict(orient="records")
 # Save as compact JSON
 # create the directory if it does not exist
 os.makedirs(base_cleaned_dir, exist_ok=True)
-with open(base_cleaned_dir + "/cleaned.json", "w", encoding="utf-8") as f:
+with open(os.path.join(base_cleaned_dir, base_cleaned_file), "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False)
 
 # Stop Spark session
