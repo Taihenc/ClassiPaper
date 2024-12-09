@@ -92,10 +92,18 @@ for data_dir in base_data_dirs:
                     keywords = [author_keywords.get('$', '')]
             cleaned_keywords = clean_keywords(keywords)
 
+            id = item['abstracts-retrieval-response']['coredata']['dc:identifier'].split(':')[1]
+            classification = item['abstracts-retrieval-response']['item']['bibrecord']['head']\
+                                  .get('enhancement', {})\
+                                  .get('classificationgroup', {})\
+                                  .get('classifications', None)
+
             combined_data.append({
+                'scopus_id': id,
                 'clean_title': title,
                 'clean_abstract': abstract,
                 'clean_keywords': cleaned_keywords,
+                'classifications': classification
             })
             dir_cleaned_count += 1
         except Exception as e:
