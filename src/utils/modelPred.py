@@ -3,6 +3,8 @@ from flask_cors import CORS  # Import CORS
 import pandas as pd
 import os, sys
 
+"""When Run you need to be in src/ml_model first ! ! !"""
+
 # Add the parent directory to sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from ml_model.predict.predict import *
@@ -38,4 +40,4 @@ def pred():
 if __name__ == '__main__':
     app.run()
 
-# When Run you need to be in src/ml_model first ! ! !
+"""When Run you need to be in src/ml_model first ! ! !"""
