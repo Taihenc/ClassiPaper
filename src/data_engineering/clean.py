@@ -28,45 +28,6 @@ spark: SparkSession = SparkSession.builder \
 base_data_dirs = [path.strip().strip('"') for path in os.getenv("BASE_DATA_DIR", "").split(",")]
 base_cleaned_dir = os.getenv("BASE_CLEANED_DIR", "").strip().strip('"')
 
-# Define cleaning functions
-def clean_text(text):
-    """Cleans text by removing non-alphabet characters and stop words."""
-    if not isinstance(text, str):
-        return ''
-    text = re.sub(r'[^a-zA-Z\s]', '', text).lower()
-    tokens = [word for word in text.split() if word not in ENGLISH_STOP_WORDS]
-    return ' '.join(tokens)
-
-def clean_keywords(keywords):
-    """Cleans keyword list by removing stop words and duplicates."""
-    if not isinstance(keywords, list):
-        return []
-    return list(set(kw for kw in keywords if kw not in ENGLISH_STOP_WORDS and len(kw) > 1))
-
-def clean_title(title):
-    """Cleans and formats title by removing leading articles."""
-    if not isinstance(title, str) or not title.strip():
-        return ''
-    title = title.title()
-    common_words = ['a', 'an', 'the']
-    title_words = title.split()
-    if title_words and title_words[0].lower() in common_words:
-        title = ' '.join(title_words[1:])
-    return title
-
-def clean_abstract(abstract):
-    """Cleans abstract by removing non-ASCII characters."""
-    if not isinstance(abstract, str):
-        return ''
-    abstract = re.sub(r'[^\x00-\x7F]+', '', abstract)
-    return abstract.strip()
-
-# Register UDFs
-clean_text_udf = udf(clean_text, StringType())
-clean_keywords_udf = udf(clean_keywords, ArrayType(StringType()))
-clean_title_udf = udf(clean_title, StringType())
-clean_abstract_udf = udf(clean_abstract, StringType())
-
 # Define the schema for input JSON files
 schema = StructType([
     StructField("abstracts-retrieval-response", StructType([
