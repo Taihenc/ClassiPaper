@@ -13,9 +13,9 @@ logging.basicConfig(level=logging.INFO)  # Change to INFO to reduce verbosity
 load_dotenv()
 
 # Read environment variables
-base_data_dirs = [path.strip().strip('"') for path in os.getenv("BASE_DATA_DIR", "").split(",")]
-base_cleaned_dir = os.getenv("BASE_CLEANED_DIR", "").strip().strip('"')
-base_cleaned_file = os.getenv("BASE_CLEANED_FILE", "").strip().strip('"')
+base_data_dirs = ["./data/raw_provided/Project/2018"]
+base_cleaned_dir = './data/processed'
+base_cleaned_file = 'cleaned_data.json'
 
 # Data Cleaning Functions
 def clean_text(text):
