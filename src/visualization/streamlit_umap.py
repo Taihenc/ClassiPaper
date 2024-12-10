@@ -5,7 +5,6 @@ import plotly.express as px
 from faker import Faker
 import plotly.graph_objects as go
 from umap import UMAP
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MultiLabelBinarizer
 import networkx as nx
@@ -29,7 +28,7 @@ def load_mock_data():
         data.append({
             'Title': faker.sentence(nb_words=6),
             'Abstract': faker.paragraph(nb_sentences=5),
-            'Classification Codes': faker.random_choices(elements=codes, length=4),
+            'subject_area': faker.random_choices(elements=codes, length=4),
             'Keywords': faker.words(nb=5)
         })
     df = pd.DataFrame(data)
@@ -38,26 +37,29 @@ def load_mock_data():
 @st.cache_data
 def load_actual_data():
     # Load the actual data
-    years = [2018, 2019, 2020, 2021, 2022, 2023]
-    papers = GetAllData(years)
-    df = pd.DataFrame([vars(paper) for paper in papers])
+    papers = GetCleanedData()
+    df = pd.DataFrame(papers)
     return df
+
+@st.cache_data
+def load_predicted_data(df):
+    # Load the predicted data
+    config = {
+        "model_save_path": "./models/LogisticRegression_single_hyper_01/2018_2023/single_label_classifier.pkl",
+        "label_encoder_save_path": "./models/LogisticRegression_single_hyper_01/2018_2023/label_encoder.pkl",
+        "tokenizer_model_save_dir": "./models/LogisticRegression_single_hyper_01/2018_2023/tokenizer_model/",
+        "batch_size": 16,
+        'tokenizer_model_name': 'allenai/scibert_scivocab_uncased'
+    }
+    predicted_df = predict_new_data(df, config)
+    return predicted_df
 
 def preprocess_data(df):
     # Extract unique codes
-    unique_codes = sorted(set(code for codes in df['Classification Codes'] for code in codes))
+    unique_codes = sorted(set(code for codes in df['subject_area'] for code in codes))
     mlb = MultiLabelBinarizer(classes=unique_codes)
-    code_matrix = mlb.fit_transform(df['Classification Codes'])
+    code_matrix = mlb.fit_transform(df['subject_area'])
     return code_matrix, unique_codes
-
-# def generate_combined_embeddings(df, code_matrix):
-#     # Generate embeddings from the Abstract field
-#     vectorizer = TfidfVectorizer(max_features=100)
-#     abstract_embeddings = vectorizer.fit_transform(df['Abstract']).toarray()
-    
-#     # Combine Abstract embeddings with the Classification Codes matrix
-#     combined_embeddings = np.hstack((abstract_embeddings, code_matrix))
-#     return combined_embeddings
 
 def generate_combined_embeddings(df, code_matrix):
     # Load pre-trained transformer model and tokenizer
@@ -75,7 +77,7 @@ def generate_combined_embeddings(df, code_matrix):
     # Generate embeddings for the abstracts
     abstract_embeddings = encode_abstracts(df['Abstract'].tolist())
     
-    # Combine Abstract embeddings with the Classification Codes matrix
+    # Combine Abstract embeddings with the subject_area matrix
     combined_embeddings = np.hstack((abstract_embeddings, code_matrix))
     return combined_embeddings
 
@@ -89,7 +91,7 @@ def cluster_and_reduce(embeddings, n_clusters=10):
 
 def compute_error_analysis(actual_df, predicted_df):
     results = []
-    for i, (actual_codes, predicted_codes) in enumerate(zip(actual_df['Classification Codes'], predicted_df['Classification Codes'])):
+    for i, (actual_codes, predicted_codes) in enumerate(zip(actual_df['subject_area'], predicted_df['subject_area'])):
         actual_set = set(actual_codes)
         predicted_set = set(predicted_codes)
 
@@ -155,7 +157,7 @@ def plot_3d_scatter_with_labels(reduced_data, clusters, labels, hover_labels):
 
 def plot_class_distribution(df, num):
     # Count the number of instances in each class
-    class_counts = df['Classification Codes'].explode().value_counts().reset_index().head(num)
+    class_counts = df['subject_area'].explode().value_counts().reset_index().head(num)
     class_counts.columns = ['Class', 'Count']
 
     # Compute the percentage
@@ -173,7 +175,7 @@ def generate_cooccurrence_network(df):
     G = nx.Graph()
 
     # Add edges based on co-occurrence
-    for codes in df['Classification Codes']:
+    for codes in df['subject_area']:
         for i, code1 in enumerate(codes):
             for code2 in codes[i+1:]:
                 if G.has_edge(code1, code2):
@@ -224,7 +226,6 @@ def plot_network(G, top_n=None, node_size=None, show_edges=True, show_labels=Tru
         x, y = pos[node]
         node_x.append(x)
         node_y.append(y)
-        # node_text.append(f"{node} (Degree: {G.degree[node]})")
         node_text.append(node)
         node_sizes.append(node_size * centrality[node] * 5)
         hover_text.append(f"{node} (Degree: {G.degree[node]})")
@@ -271,7 +272,7 @@ def main():
 
     # Load data in session state
     if 'actual_df' not in st.session_state:
-        st.session_state['actual_df'] = load_mock_data() if use_mock else None
+        st.session_state['actual_df'] = load_mock_data() if use_mock else load_actual_data()
         st.session_state['code_matrix'], st.session_state['unique_codes'] = preprocess_data(st.session_state['actual_df'])
         st.session_state['embeddings'] = generate_combined_embeddings(
             st.session_state['actual_df'], st.session_state['code_matrix']
@@ -279,7 +280,7 @@ def main():
         st.session_state['reduced_data'], st.session_state['cluster_labels'] = cluster_and_reduce(st.session_state['embeddings'])
 
     if 'predicted_df' not in st.session_state:
-        st.session_state['predicted_df'] = load_mock_data() if use_mock else None
+        st.session_state['predicted_df'] = load_mock_data() if use_mock else load_predicted_data(st.session_state['actual_df'])
         st.session_state['p_code_matrix'], st.session_state['p_unique_codes'] = preprocess_data(st.session_state['predicted_df'])
         st.session_state['p_embeddings'] = generate_combined_embeddings(
             st.session_state['predicted_df'], st.session_state['p_code_matrix']
@@ -309,13 +310,13 @@ def main():
 
     with col1:
         # UMAP 3D Scatter Plot (actual)
-        fig_scatter = plot_3d_scatter_with_labels(reduced_data, unique_codes, cluster_labels, df['Classification Codes'])
+        fig_scatter = plot_3d_scatter_with_labels(reduced_data, unique_codes, cluster_labels, df['subject_area'])
         fig_scatter.update_layout(height=650, title="3D UMAP Clustering of Actual Data")
         st.plotly_chart(fig_scatter)
 
     with col2:
         # UMAP 3D Scatter Plot (predicted)
-        fig_scatter = plot_3d_scatter_with_labels(p_reduced_data, p_unique_codes, p_cluster_labels, predicted_df['Classification Codes'])
+        fig_scatter = plot_3d_scatter_with_labels(p_reduced_data, p_unique_codes, p_cluster_labels, predicted_df['subject_area'])
         fig_scatter.update_layout(height=650, title="3D UMAP Clustering of Predicted Data")
         st.plotly_chart(fig_scatter)
 
