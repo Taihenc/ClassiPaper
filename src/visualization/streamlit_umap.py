@@ -102,8 +102,8 @@ def compute_error_analysis(actual_df, predicted_df):
         # Store results
         results.append({
             'Paper ID': i,
-            'Actual Codes': actual_codes,
-            'Predicted Codes': predicted_codes,
+            'Actual Subject Area': actual_codes,
+            'Predicted Subject Area': predicted_codes,
             'Jaccard Similarity': jaccard
         })
     return pd.DataFrame(results)
@@ -166,12 +166,12 @@ def plot_class_distribution(df, num):
     class_counts['Percentage'] = (class_counts['Count'] / total_count) * 100
 
     # Create a horizontal bar chart
-    fig = px.bar(class_counts, y='Class', x='Percentage', title='Class Distribution', height=600, color='Class', orientation='h')
-    fig.update_layout(xaxis_title='Percentage', yaxis_title='Classification Code')
+    fig = px.bar(class_counts, y='Class', x='Percentage', title='Subject Area Distribution', height=600, color='Class', orientation='h')
+    fig.update_layout(xaxis_title='Percentage', yaxis_title='Subject Areas')
     return fig
 
 def generate_cooccurrence_network(df):
-    """Generate a co-occurrence graph of classification codes."""
+    """Generate a co-occurrence graph of subject areas."""
     # Initialize the graph
     G = nx.Graph()
 
@@ -255,7 +255,7 @@ def plot_network(G, top_n=None, node_size=None, show_edges=True, show_labels=Tru
     # Combine edge and node traces
     fig = go.Figure(data=[edge_trace, node_trace] if show_edges else [node_trace])
     fig.update_layout(
-        title="Classification Codes Co-occurrence Network",
+        title="Subject Area Co-occurrence Network",
         showlegend=False,
         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
@@ -266,7 +266,7 @@ def plot_network(G, top_n=None, node_size=None, show_edges=True, show_labels=Tru
 def main():
     st.set_page_config(page_title="ClassiPaper", layout="wide")
 
-    st.title("Paper Research Classification Prediction Clustering and Visualization")
+    st.title("Paper Research Classification Prediction Visualization")
 
     st.write("")
     st.write("")
@@ -336,7 +336,7 @@ def main():
 
     st.markdown("---")
 
-    st.header("Classification Codes Network Analysis")
+    st.header("Subject Areas Network Graph")
 
     # Generate and plot the co-occurrence network
     G = generate_cooccurrence_network(df)
@@ -366,7 +366,7 @@ def main():
     st.sidebar.markdown("---")
 
     # Class distribution bar chart
-    st.header("Classification Code Distribution")
+    st.header("Subject Area Distribution")
     fig_class_dist = plot_class_distribution(df, num_classes)
     st.plotly_chart(fig_class_dist)
 
