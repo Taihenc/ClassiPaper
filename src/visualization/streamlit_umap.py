@@ -6,7 +6,7 @@ from faker import Faker
 import plotly.graph_objects as go
 from umap import UMAP
 from sklearn.cluster import KMeans
-from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.preprocessing import LabelBinarizer
 import networkx as nx
 from transformers import AutoTokenizer, AutoModel
 import torch
@@ -28,7 +28,7 @@ def load_mock_data():
         data.append({
             'Title': faker.sentence(nb_words=6),
             'abstract': faker.paragraph(nb_sentences=5),
-            'subject_area': faker.random_choices(elements=codes, length=4),
+            'subject_area': faker.word(),
             'Keywords': faker.words(nb=5)
         })
     df = pd.DataFrame(data)
@@ -56,10 +56,10 @@ def load_predicted_data(df):
 
 def preprocess_data(df, p_flag):
     # Extract unique codes
-    sarea = 'subject_area' if p_flag == False else 'predicted_subject_area'
-    unique_codes = sorted(set(code for codes in df[sarea] for code in codes))
-    mlb = MultiLabelBinarizer(classes=unique_codes)
-    code_matrix = mlb.fit_transform(df[sarea])
+    sarea = 'subject_area' if not p_flag else 'predicted_subject_area'
+    unique_codes = sorted(df[sarea].unique())
+    lb = LabelBinarizer()
+    code_matrix = lb.fit_transform(df[sarea])
     return code_matrix, unique_codes
 
 def generate_combined_embeddings(df, code_matrix):
@@ -88,13 +88,14 @@ def cluster_and_reduce(embeddings, n_clusters=10):
     reduced_data = umap_reducer.fit_transform(embeddings)
     # kmeans = KMeans(n_clusters=n_clusters, random_state=42)
     # cluster_labels = kmeans.fit_predict(reduced_data)
-    return reduced_data
+    cluster_labels = []
+    return reduced_data, cluster_labels
 
 def compute_error_analysis(actual_df, predicted_df):
     results = []
     for i, (actual_codes, predicted_codes) in enumerate(zip(actual_df['subject_area'], predicted_df['predicted_subject_area'])):
-        actual_set = set(actual_codes)
-        predicted_set = set(predicted_codes)
+        actual_set = set([actual_codes])
+        predicted_set = set([predicted_codes])
 
         # Compute Jaccard similarity
         jaccard = len(actual_set & predicted_set) / len(actual_set | predicted_set) if len(actual_set | predicted_set) > 0 else 0
@@ -104,20 +105,20 @@ def compute_error_analysis(actual_df, predicted_df):
             'Paper ID': i,
             'Actual Subject Area': actual_codes,
             'Predicted Subject Area': predicted_codes,
-            'Jaccard Similarity': jaccard
+            'Result': jaccard
         })
     return pd.DataFrame(results)
 
 def plot_error_analysis(errors_df):
     fig = px.histogram(
         errors_df, 
-        x='Jaccard Similarity', 
-        title='Distribution of Jaccard Similarities',
+        x='Result', 
+        title='Distribution of Predicted Results',
         nbins=20,
-        labels={'x': 'Jaccard Similarity'},
+        labels={'x': 'Result'},
         height=600
     )
-    fig.update_layout(xaxis_title='Jaccard Similarity', yaxis_title='Count')
+    fig.update_layout(xaxis_title='Result', yaxis_title='Count')
     return fig
 
 def plot_3d_scatter_with_labels(reduced_data, clusters, labels, hover_labels):
@@ -158,7 +159,7 @@ def plot_3d_scatter_with_labels(reduced_data, clusters, labels, hover_labels):
 
 def plot_class_distribution(df, num):
     # Count the number of instances in each class
-    class_counts = df['subject_area'].explode().value_counts().reset_index().head(num)
+    class_counts = df['subject_area'].value_counts().reset_index().head(num)
     class_counts.columns = ['Class', 'Count']
 
     # Compute the percentage
@@ -168,99 +169,6 @@ def plot_class_distribution(df, num):
     # Create a horizontal bar chart
     fig = px.bar(class_counts, y='Class', x='Percentage', title='Subject Area Distribution', height=600, color='Class', orientation='h')
     fig.update_layout(xaxis_title='Percentage', yaxis_title='Subject Areas')
-    return fig
-
-def generate_cooccurrence_network(df):
-    """Generate a co-occurrence graph of subject areas."""
-    # Initialize the graph
-    G = nx.Graph()
-
-    # Add edges based on co-occurrence
-    for codes in df['subject_area']:
-        for i, code1 in enumerate(codes):
-            for code2 in codes[i+1:]:
-                if G.has_edge(code1, code2):
-                    G[code1][code2]['weight'] += 1
-                else:
-                    G.add_edge(code1, code2, weight=1)
-    
-    return G
-
-def plot_network(G, top_n=None, node_size=None, show_edges=True, show_labels=True):
-    """Plot a co-occurrence network using Plotly."""
-    # Calculate degree centrality for sizing
-    centrality = nx.degree_centrality(G)
-
-    # Extract the top N nodes by degree centrality if specified
-    if top_n:
-        top_nodes = sorted(centrality, key=centrality.get, reverse=True)[:top_n]
-        G = G.subgraph(top_nodes)
-
-    # Generate positions for nodes
-    pos = nx.spring_layout(G, seed=42)
-
-    # Create edge traces
-    edge_x = []
-    edge_y = []
-    if show_edges:
-        for edge in G.edges(data=True):
-            x0, y0 = pos[edge[0]]
-            x1, y1 = pos[edge[1]]
-            edge_x += [x0, x1, None]
-            edge_y += [y0, y1, None]
-
-    edge_trace = go.Scatter(
-        x=edge_x,
-        y=edge_y,
-        line=dict(width=0.5, color='#888'),
-        hoverinfo='none',
-        mode='lines'
-    )
-
-    # Create node traces
-    node_x = []
-    node_y = []
-    node_text = []
-    node_sizes = []
-    hover_text = []
-    for node in G.nodes():
-        x, y = pos[node]
-        node_x.append(x)
-        node_y.append(y)
-        node_text.append(node)
-        node_sizes.append(node_size * centrality[node] * 5)
-        hover_text.append(f"{node} (Degree: {G.degree[node]})")
-
-    node_trace = go.Scatter(
-        x=node_x,
-        y=node_y,
-        mode='markers+text' if show_labels else 'markers',
-        marker=dict(
-            size=node_sizes,
-            color=node_sizes,
-            colorscale='Viridis',
-            showscale=True,
-            colorbar=dict(
-                title="Centrality",
-                xanchor='left',
-                titleside='right'
-            )
-        ),
-        text=node_text,
-        textposition='top center' if show_labels else 'top center',
-        hoverinfo='text',
-        hovertext=hover_text
-    )
-
-    # Combine edge and node traces
-    fig = go.Figure(data=[edge_trace, node_trace] if show_edges else [node_trace])
-    fig.update_layout(
-        title="Subject Area Co-occurrence Network",
-        showlegend=False,
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        height=600
-    )
     return fig
 
 def main():
@@ -278,7 +186,7 @@ def main():
         st.session_state['embeddings'] = generate_combined_embeddings(
             st.session_state['actual_df'], st.session_state['code_matrix']
         )
-        st.session_state['reduced_data'] = cluster_and_reduce(st.session_state['embeddings'])
+        st.session_state['reduced_data'], st.session_state['cluster_labels'] = cluster_and_reduce(st.session_state['embeddings'])
 
     if 'predicted_df' not in st.session_state:
         st.session_state['predicted_df'] = load_mock_data() if use_mock else load_predicted_data(st.session_state['actual_df'])
@@ -286,7 +194,7 @@ def main():
         st.session_state['p_embeddings'] = generate_combined_embeddings(
             st.session_state['predicted_df'], st.session_state['p_code_matrix']
         )
-        st.session_state['p_reduced_data'] = cluster_and_reduce(st.session_state['p_embeddings'])
+        st.session_state['p_reduced_data'], st.session_state['p_cluster_labels'] = cluster_and_reduce(st.session_state['p_embeddings'])
 
     # Load data from session state
     df = st.session_state['actual_df']
@@ -299,6 +207,8 @@ def main():
     # Load clustering results from session state
     reduced_data = st.session_state['reduced_data']
     p_reduced_data = st.session_state['p_reduced_data']
+    cluster_labels = st.session_state['cluster_labels']
+    p_cluster_labels = st.session_state['p_cluster_labels']
 
     # Sidebar
     st.sidebar.title("Settings")
@@ -311,13 +221,13 @@ def main():
 
     with col1:
         # UMAP 3D Scatter Plot (actual)
-        fig_scatter = plot_3d_scatter_with_labels(reduced_data, unique_codes, [], df['subject_area'])
+        fig_scatter = plot_3d_scatter_with_labels(reduced_data, unique_codes, cluster_labels, df['subject_area'])
         fig_scatter.update_layout(height=650, title="3D UMAP Clustering of Actual Data")
         st.plotly_chart(fig_scatter)
 
     with col2:
         # UMAP 3D Scatter Plot (predicted)
-        fig_scatter = plot_3d_scatter_with_labels(p_reduced_data, p_unique_codes, [], predicted_df['predicted_subject_area'])
+        fig_scatter = plot_3d_scatter_with_labels(p_reduced_data, p_unique_codes, p_cluster_labels, predicted_df['predicted_subject_area'])
         fig_scatter.update_layout(height=650, title="3D UMAP Clustering of Predicted Data")
         st.plotly_chart(fig_scatter)
 
@@ -332,31 +242,6 @@ def main():
         with dat2:
             st.subheader("Predicted Data")
             st.write(predicted_df)
-
-
-    st.markdown("---")
-
-    st.header("Subject Areas Network Graph")
-
-    # Generate and plot the co-occurrence network
-    G = generate_cooccurrence_network(df)
-
-    # Display network with top N nodes (optional)
-    st.sidebar.subheader("Network Settings")
-    top_n = st.sidebar.slider("Number of Top Nodes to Display", 10, len(G.nodes), value=20)
-    node_size = st.sidebar.slider("Node Size", 1, 20, value=10)
-    show_edges = st.sidebar.checkbox("Show Edges", value=True)
-    show_labels = st.sidebar.checkbox("Show Class Names", value=True)
-    st.sidebar.markdown("---")
-
-    fig_network = plot_network(G, top_n=top_n, node_size=node_size, show_edges=show_edges, show_labels=show_labels)
-    st.plotly_chart(fig_network)
-
-    # Network statistics
-    st.subheader("Network Statistics")
-    st.write(f"**Number of Nodes:** {G.number_of_nodes()}")
-    st.write(f"**Number of Edges:** {G.number_of_edges()}")
-    st.write(f"**Average Degree:** {np.mean([d for n, d in G.degree()]):.2f}")
 
     st.markdown("---")
 
@@ -386,7 +271,7 @@ def main():
 
         # Display a summary of error metrics
         st.subheader("Error Metrics Summary")
-        avg_jaccard = errors_df['Jaccard Similarity'].mean()
+        avg_jaccard = errors_df['Result'].mean()
         st.subheader(f"**Average Jaccard Similarity:** {avg_jaccard:.2f}")
 
         st.write("")
