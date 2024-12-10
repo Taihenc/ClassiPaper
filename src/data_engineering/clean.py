@@ -10,8 +10,12 @@ from pyspark.sql.types import StringType, ArrayType, StructType, StructField, St
 
 from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
+print("1")
+
 # Load environment variables
 load_dotenv()
+
+print("1")
 
 # Initialize Spark session
 spark: SparkSession = SparkSession.builder \
@@ -23,6 +27,8 @@ spark: SparkSession = SparkSession.builder \
     .config("spark.executor.cores", "4") \
     .config("spark.driver.maxResultSize", "2g") \
     .getOrCreate()
+
+print("1")
 
 # Load directories from environment variables
 base_data_dirs = [path.strip().strip('"') for path in os.getenv("BASE_DATA_DIR", "").split(",")]

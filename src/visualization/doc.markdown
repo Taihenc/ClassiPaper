@@ -52,7 +52,7 @@ Here is an example of how to use the application with mock data:
 
 1. Run the application:
     ```sh
-    streamlit run ./src/visualization/streamlit_umap.py
+    streamlit run ./src/visualization/dsde_viz.py
     ```
 
 2. Adjust the settings in the sidebar as needed.

@@ -11,10 +11,16 @@ from sklearn.preprocessing import MultiLabelBinarizer
 import networkx as nx
 from transformers import AutoTokenizer, AutoModel
 import torch
+import os, sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from ml_model.predict.predict import *
+from data_engineering.data import *
 
 # Use mock or not
 use_mock = True
 
+@st.cache_data
 def load_mock_data():
     faker = Faker()
     data = []
@@ -27,6 +33,14 @@ def load_mock_data():
             'Keywords': faker.words(nb=5)
         })
     df = pd.DataFrame(data)
+    return df
+
+@st.cache_data
+def load_actual_data():
+    # Load the actual data
+    years = [2018, 2019, 2020, 2021, 2022, 2023]
+    papers = GetAllData(years)
+    df = pd.DataFrame([vars(paper) for paper in papers])
     return df
 
 def preprocess_data(df):

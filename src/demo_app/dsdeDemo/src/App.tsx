@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextField, Button, Typography } from "@mui/material";
+import { TextField, Button, Typography, LinearProgress } from "@mui/material";
 import "./App.css";
 
 interface Result {
@@ -14,9 +14,11 @@ function App() {
   const [abstract, setAbstract] = useState("");
   const [keywords, setKeywords] = useState("");
   const [result, setResult] = useState<Result | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const data = {
       title: [title],
       abstract: [abstract],
@@ -38,11 +40,13 @@ function App() {
       console.log(res);
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 font-serif">
+    <div className="flex flex-col items-center justify-center min-h-screen font-serif">
       <div className="text-4xl text-sky-100 font-serif">
         Predict the Category of a Research Paper
       </div>
@@ -87,19 +91,36 @@ function App() {
           <Typography variant="h6" className="mb-4 text-gray-700">
             Result
           </Typography>
-          <pre className="text-gray-600 pt-8">
-            {!result ? (
-              "The result will appear here..."
-            ) : (
-              <div>
-                <p className="text-ellipsis whitespace-normal">
-                  <strong>Predicted Subject Area:</strong>{" "}
-                  {result?.predicted_subject_area}
-                </p>
-              </div>
-            )}
-          </pre>
+          {loading ? (
+            <div className="p-8"><LinearProgress /></div>
+          ) : (
+            <pre className="text-gray-600 pt-2">
+              {!result ? (
+                "The result will appear here..."
+              ) : (
+                <div>
+                  <p className="text-ellipsis whitespace-normal">
+                    <strong>Predicted Subject Area:</strong>{" "}
+                    {result?.predicted_subject_area}
+                  </p>
+                </div>
+              )}
+            </pre>
+          )}
         </div>
+
+        {/* Clear data button */}
+        <Button
+          onClick={() => {
+            setTitle("");
+            setAbstract("");
+            setKeywords("");
+            setResult(null);
+          }}
+          variant="contained"
+          color="error"
+          className="w-full"
+        >Clear</Button>
       </form>
     </div>
   );
