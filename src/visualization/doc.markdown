@@ -50,9 +50,11 @@ ClassiPaper is a Streamlit application that provides clustering and visualizatio
 ## Example
 Here is an example of how to use the application with mock data:
 
+0. If you will not use mock data make sure you are in './src/ml_model' directory to run predict data smoothly.
+
 1. Run the application:
     ```sh
-    streamlit run ./src/visualization/dsde_viz.py
+    streamlit run ./src/visualization/streamlit_umap.py
     ```
 
 2. Adjust the settings in the sidebar as needed.
@@ -60,6 +62,3 @@ Here is an example of how to use the application with mock data:
 3. View the clustering visualization and class distribution.
 
 4. Toggle the error analysis to view the error metrics and detailed analysis.
-
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request on GitHub.
