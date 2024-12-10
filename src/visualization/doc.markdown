@@ -11,18 +11,6 @@ ClassiPaper is a Streamlit application that provides clustering and visualizatio
 - Display class distribution
 - Perform error analysis between actual and predicted classifications
 
-## Installation
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/your-repo/classipaper.git
-    cd classipaper
-    ```
-
-2. Install the required packages:
-    ```sh
-    pip install -r requirements.txt
-    ```
-
 ## Usage
 1. Run the Streamlit application:
     ```sh

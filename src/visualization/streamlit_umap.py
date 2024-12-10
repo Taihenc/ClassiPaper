@@ -1,3 +1,6 @@
+"""If you are not using mock data please be in the src/ml_model in order to run the code"""
+"""Or else the error will occur"""
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -289,3 +292,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+"""If you are not using mock data please be in the src/ml_model in order to run the code"""
+"""Or else the error will occur"""
